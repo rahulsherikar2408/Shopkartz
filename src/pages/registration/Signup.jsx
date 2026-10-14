@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import MyContext from '../../context/data/MyContext';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, firedb } from '../../firebase/FirebaseConfig';
 import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import Loader from '../../components/loader/Loader';
@@ -26,7 +26,11 @@ function Signup() {
 
         try {
             const users = await createUserWithEmailAndPassword(auth, email, password);
-            // console.log(users);
+            try {
+                await updateProfile(users.user, { displayName: name });
+            } catch (profileErr) {
+                console.log("Could not set displayName in auth profile:", profileErr);
+            }
 
             const user = {
                 name: name,
@@ -50,9 +54,9 @@ function Signup() {
     }
 
     return (
-        <div className='flex justify-center items-center min-h-screen px-4 bg-gray-900'>
+        <div className='flex justify-center items-center min-h-screen px-4 py-8 bg-gray-900'>
             {loading && <Loader />}
-            <div className='bg-gray-800 px-8 py-10 rounded-3xl shadow-2xl border border-gray-700 w-full max-w-md'>
+            <div className='bg-gray-800 px-6 sm:px-8 py-8 sm:py-10 rounded-3xl shadow-2xl border border-gray-700 w-full max-w-md'>
                 <div className="text-center mb-6">
                     <Link to={'/'} className="inline-block">
                         <h2 className="text-2xl font-extrabold text-pink-500 tracking-tight">ShopKartz</h2>

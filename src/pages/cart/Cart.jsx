@@ -157,17 +157,17 @@ function Cart() {
               {cartItem.map((item, index) => {
                 const { title, price, imageUrl, description } = item;
                 return (
-                  <div key={index} className="justify-between rounded-2xl border drop-shadow-md bg-white p-5 sm:flex sm:justify-start gap-4 transition-all hover:shadow-lg" style={{ backgroundColor: mode === 'dark' ? 'rgb(32 33 34)' : '', color: mode === 'dark' ? 'white' : '', borderColor: mode === 'dark' ? 'rgb(55 65 81)' : 'rgb(229 231 235)' }}>
-                    <img src={imageUrl} alt={title} className="w-full sm:w-32 h-32 object-cover rounded-xl" />
-                    <div className="sm:ml-2 sm:flex sm:w-full sm:justify-between items-center mt-4 sm:mt-0">
+                  <div key={index} className="rounded-2xl border drop-shadow-md bg-white p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 transition-all hover:shadow-lg" style={{ backgroundColor: mode === 'dark' ? 'rgb(32 33 34)' : '', color: mode === 'dark' ? 'white' : '', borderColor: mode === 'dark' ? 'rgb(55 65 81)' : 'rgb(229 231 235)' }}>
+                    <img src={imageUrl} alt={title} className="w-full sm:w-28 md:w-32 h-48 sm:h-28 md:h-32 object-cover rounded-xl flex-shrink-0" />
+                    <div className="flex flex-1 flex-col sm:flex-row sm:items-center justify-between w-full gap-3">
                       <div className="space-y-1">
-                        <h2 className="text-lg font-bold text-gray-900" style={{ color: mode === 'dark' ? 'white' : '' }}>{title}</h2>
+                        <h2 className="text-base sm:text-lg font-bold text-gray-900" style={{ color: mode === 'dark' ? 'white' : '' }}>{title}</h2>
                         {description && (
                           <p className="text-xs text-gray-500 line-clamp-2 max-w-md" style={{ color: mode === 'dark' ? 'rgb(156 163 175)' : '' }}>{description}</p>
                         )}
-                        <p className="text-lg font-semibold text-pink-600">₹{price}</p>
+                        <p className="text-base sm:text-lg font-semibold text-pink-600">₹{price}</p>
                       </div>
-                      <div className="mt-3 sm:mt-0 flex justify-end">
+                      <div className="flex sm:justify-end self-end sm:self-auto">
                         <button
                           type="button"
                           onClick={() => deleteCart(item)}

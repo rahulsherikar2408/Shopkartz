@@ -8,7 +8,7 @@ function AddProduct() {
 
     return (
         <div className='flex justify-center items-center min-h-screen px-4 py-8 bg-gray-900'>
-            <div className='bg-gray-800 px-8 py-8 rounded-3xl shadow-2xl border border-gray-700 w-full max-w-md'>
+            <div className='bg-gray-800 px-6 sm:px-8 py-6 sm:py-8 rounded-3xl shadow-2xl border border-gray-700 w-full max-w-md'>
                 <div className="text-center mb-6">
                     <h1 className='text-white text-2xl font-bold'>Add Product</h1>
                     <p className='text-xs text-gray-400 mt-1'>Enter details to list a new item in your store</p>

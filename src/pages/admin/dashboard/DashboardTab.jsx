@@ -32,21 +32,21 @@ function DashboardTab() {
             <div className="container mx-auto">
                 <div className="tab container mx-auto ">
                     <Tabs defaultIndex={0} className=" " >
-                        <TabList className="md:flex md:space-x-8 bg-  grid grid-cols-2 text-center gap-4   md:justify-center mb-10 ">
+                        <TabList className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-8">
                             <Tab>
-                                <button type="button" className="font-medium border-b-2 hover:shadow-purple-700 border-purple-500 text-purple-500 rounded-lg text-xl shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]  px-5 py-1.5 text-center bg-[#605d5d12] ">
+                                <button type="button" className="font-semibold border-b-2 hover:shadow-purple-700 border-purple-500 text-purple-500 rounded-xl text-sm sm:text-base shadow-[inset_0_0_8px_rgba(0,0,0,0.6)] px-4 sm:px-6 py-2 text-center bg-[#605d5d12] transition-all">
                                     <div className="flex gap-2 items-center">
                                         <MdOutlineProductionQuantityLimits />Products</div> </button>
                             </Tab>
                             <Tab>
-                                <button type="button" className="font-medium border-b-2 border-pink-500 bg-[#605d5d12] text-pink-500  hover:shadow-pink-700  rounded-lg text-xl shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]    px-5 py-1.5 text-center ">
+                                <button type="button" className="font-semibold border-b-2 border-pink-500 bg-[#605d5d12] text-pink-500 hover:shadow-pink-700 rounded-xl text-sm sm:text-base shadow-[inset_0_0_8px_rgba(0,0,0,0.6)] px-4 sm:px-6 py-2 text-center transition-all">
                                     <div className="flex gap-2 items-center">
-                                        <AiFillShopping /> Order
+                                        <AiFillShopping /> Orders
                                     </div>
                                 </button>
                             </Tab>
                             <Tab>
-                                <button type="button" className="font-medium border-b-2 border-green-500 bg-[#605d5d12] text-green-500 rounded-lg text-xl  hover:shadow-green-700 shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]   px-5 py-1.5 text-center ">
+                                <button type="button" className="font-semibold border-b-2 border-green-500 bg-[#605d5d12] text-green-500 rounded-xl text-sm sm:text-base hover:shadow-green-700 shadow-[inset_0_0_8px_rgba(0,0,0,0.6)] px-4 sm:px-6 py-2 text-center transition-all">
                                     <div className="flex gap-2 items-center">
                                         <FaUser /> Users
                                     </div>
@@ -150,9 +150,10 @@ function DashboardTab() {
                             </div>
                         </TabPanel>
                         <TabPanel>
-                            <div className="relative overflow-x-auto mb-16">
-                                <h1 className=' text-center mb-5 text-3xl font-semibold underline' style={{ color: mode === 'dark' ? 'white' : '' }}>Order Details</h1>
-                                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400" >
+                            <div className="px-4 md:px-0 mb-16">
+                                <h1 className='text-center mb-5 text-2xl sm:text-3xl font-bold underline' style={{ color: mode === 'dark' ? 'white' : '' }}>Order Details</h1>
+                                <div className="relative overflow-x-auto rounded-2xl border border-gray-200 shadow-sm">
+                                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400" >
                                     <thead className="text-xs text-black uppercase bg-gray-200 " style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
                                         <tr>
                                             <th scope="col" className="px-6 py-3">
@@ -248,14 +249,15 @@ function DashboardTab() {
                                         )
                                     })}
                                 </table>
-
+                                </div>
                             </div>
                         </TabPanel>
                         <TabPanel>
                             {/* <User addressInfo={addressInfo} setAddressInfo={setAddressInfo} setLoading={setLoading} /> */}
-                            <div className="relative overflow-x-auto mb-10">
-                                <h1 className=' text-center mb-5 text-3xl font-semibold underline' style={{ color: mode === 'dark' ? 'white' : '' }}>User Details</h1>
-                                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <div className="px-4 md:px-0 mb-16">
+                                <h1 className='text-center mb-5 text-2xl sm:text-3xl font-bold underline' style={{ color: mode === 'dark' ? 'white' : '' }}>User Details</h1>
+                                <div className="relative overflow-x-auto rounded-2xl border border-gray-200 shadow-sm">
+                                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead className="text-xs text-black uppercase bg-gray-200 " style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
                                         <tr>
                                             <th scope="col" className="px-6 py-3">
@@ -299,6 +301,7 @@ function DashboardTab() {
                                     })}
 
                                 </table>
+                                </div>
                             </div>
                         </TabPanel>
 

@@ -138,24 +138,24 @@ function ProductInfo() {
                                     {products.description}
                                 </p>
 
-                                <div className="flex items-center">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
                                     <div>
                                         <span className="text-xs text-gray-400 block uppercase">Price</span>
                                         <span className="title-font font-extrabold text-3xl text-pink-600">
                                             ₹{products.price}
                                         </span>
                                     </div>
-                                    <div className="flex items-center ml-auto">
+                                    <div className="flex items-center gap-3 w-full sm:w-auto">
                                         <button 
                                             onClick={() => addCart(products)} 
-                                            className="flex items-center gap-2 text-white bg-pink-600 border-0 py-3 px-6 sm:px-8 focus:outline-none hover:bg-pink-700 rounded-xl font-bold shadow-md shadow-pink-200 hover:shadow-lg transition-all duration-300 hover:scale-105"
+                                            className="flex-1 sm:flex-initial flex items-center justify-center gap-2 text-white bg-pink-600 border-0 py-3 px-6 sm:px-8 focus:outline-none hover:bg-pink-700 rounded-xl font-bold shadow-md shadow-pink-200 hover:shadow-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base"
                                         >
                                             Add To Cart
                                         </button>
                                         <button
                                             type="button"
                                             onClick={toggleWishlist}
-                                            className={`rounded-xl w-12 h-12 p-0 border inline-flex items-center justify-center ml-3 transition-all duration-300 shadow-sm ${
+                                            className={`rounded-xl w-12 h-12 p-0 border inline-flex items-center justify-center transition-all duration-300 shadow-sm flex-shrink-0 ${
                                                 isWishlisted ? 'bg-red-50 text-red-500 border-red-200' : 'bg-gray-100 text-gray-500 border-gray-200 hover:text-red-500 hover:bg-red-50'
                                             }`}
                                             title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}

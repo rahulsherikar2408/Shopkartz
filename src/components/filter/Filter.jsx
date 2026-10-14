@@ -46,16 +46,25 @@ function Filter() {
                             className="px-8 py-3 w-full rounded-md bg-violet-0 border-transparent outline-0 text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', }} />
                     </div>
                     <div className="flex items-center justify-between mt-4">
-                        <p className="font-medium">
+                        <p className="font-semibold text-sm sm:text-base">
                             Filters
                         </p>
-                        <button onClick={resetFilter} className="px-4 py-2 bg-gray-50 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                        <button 
+                            onClick={resetFilter} 
+                            className="px-4 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs sm:text-sm font-semibold rounded-lg transition-colors" 
+                            style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '' }}
+                        >
                             Reset Filter
                         </button>
                     </div>
                     <div>
-                        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-                            <select value={filterType} onChange={(e) => setFilterType(e.target.value)} className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', }}>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-4">
+                            <select 
+                                value={filterType} 
+                                onChange={(e) => setFilterType(e.target.value)} 
+                                className="px-4 py-2.5 w-full rounded-xl border border-gray-200 outline-none focus:border-pink-500 text-sm bg-white" 
+                                style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', borderColor: mode === 'dark' ? 'rgb(75 85 99)' : '' }}
+                            >
                                 <option value="">All Categories</option>
                                 {categories.map((category, index) => {
                                     return (
@@ -63,7 +72,12 @@ function Filter() {
                                     )
                                 })}
                             </select>
-                            <select value={filterPrice} onChange={(e) => setFilterPrice(e.target.value)} className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', }}>
+                            <select 
+                                value={filterPrice} 
+                                onChange={(e) => setFilterPrice(e.target.value)} 
+                                className="px-4 py-2.5 w-full rounded-xl border border-gray-200 outline-none focus:border-pink-500 text-sm bg-white" 
+                                style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', borderColor: mode === 'dark' ? 'rgb(75 85 99)' : '' }}
+                            >
                                 {priceRanges.map((range, index) => {
                                     return (
                                         <option key={index} value={range.value}>{range.label}</option>

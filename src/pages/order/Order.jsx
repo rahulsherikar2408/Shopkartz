@@ -34,51 +34,51 @@ function Order() {
                   style={{ backgroundColor: mode === 'dark' ? 'rgb(32 33 34)' : '', borderColor: mode === 'dark' ? 'rgb(55 65 81)' : '' }}
                 >
                   {/* Order Card Header */}
-                  <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 flex flex-wrap justify-between items-center gap-4" style={{ backgroundColor: mode === 'dark' ? 'rgb(40 42 46)' : '', borderColor: mode === 'dark' ? 'rgb(55 65 81)' : '' }}>
-                    <div className="space-y-1">
-                      <p className="text-xs text-gray-500 uppercase font-semibold">Order Placed</p>
-                      <p className="text-sm font-medium text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                  <div className="bg-gray-50 px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100 flex flex-wrap justify-between items-center gap-3 sm:gap-4" style={{ backgroundColor: mode === 'dark' ? 'rgb(40 42 46)' : '', borderColor: mode === 'dark' ? 'rgb(55 65 81)' : '' }}>
+                    <div className="space-y-0.5">
+                      <p className="text-[11px] sm:text-xs text-gray-500 uppercase font-semibold">Order Placed</p>
+                      <p className="text-xs sm:text-sm font-medium text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>
                         {orderData.date || 'Recent'}
                       </p>
                     </div>
 
                     {orderData.paymentId && (
-                      <div className="space-y-1 hidden sm:block">
-                        <p className="text-xs text-gray-500 uppercase font-semibold">Payment ID</p>
-                        <p className="text-xs font-mono text-gray-600 truncate max-w-[160px]" style={{ color: mode === 'dark' ? '#9ca3af' : '' }}>
+                      <div className="space-y-0.5">
+                        <p className="text-[11px] sm:text-xs text-gray-500 uppercase font-semibold">Payment ID</p>
+                        <p className="text-xs font-mono text-gray-600 truncate max-w-[120px] sm:max-w-[160px]" style={{ color: mode === 'dark' ? '#9ca3af' : '' }}>
                           {orderData.paymentId}
                         </p>
                       </div>
                     )}
 
                     {orderData.addressInfo?.name && (
-                      <div className="space-y-1 hidden md:block">
-                        <p className="text-xs text-gray-500 uppercase font-semibold">Ship To</p>
-                        <p className="text-sm font-medium text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                      <div className="space-y-0.5 hidden sm:block">
+                        <p className="text-[11px] sm:text-xs text-gray-500 uppercase font-semibold">Ship To</p>
+                        <p className="text-xs sm:text-sm font-medium text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>
                           {orderData.addressInfo.name}
                         </p>
                       </div>
                     )}
 
                     <div>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">
+                      <span className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-green-100 text-green-700">
                         ● Order Confirmed
                       </span>
                     </div>
                   </div>
 
                   {/* Order Items List */}
-                  <div className="p-6 divide-y divide-gray-100" style={{ borderColor: mode === 'dark' ? 'rgb(55 65 81)' : '' }}>
+                  <div className="p-4 sm:p-6 divide-y divide-gray-100" style={{ borderColor: mode === 'dark' ? 'rgb(55 65 81)' : '' }}>
                     {(orderData.cartItem || []).map((item, itemIndex) => (
                       <div key={item.id || itemIndex} className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row items-center sm:items-start gap-4">
                         <img 
                           src={item.imageUrl} 
                           alt={item.title} 
-                          className="w-24 h-24 object-cover rounded-xl border border-gray-100 flex-shrink-0"
+                          className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl border border-gray-100 flex-shrink-0"
                           style={{ borderColor: mode === 'dark' ? 'rgb(55 65 81)' : '' }}
                         />
                         <div className="flex-1 text-center sm:text-left space-y-1">
-                          <h3 className="font-bold text-gray-900 text-base" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                          <h3 className="font-bold text-gray-900 text-sm sm:text-base" style={{ color: mode === 'dark' ? 'white' : '' }}>
                             {item.title}
                           </h3>
                           {item.description && (
@@ -95,11 +95,11 @@ function Order() {
                   </div>
 
                   {/* Order Card Footer */}
-                  <div className="bg-gray-50 px-6 py-3 border-t border-gray-100 flex justify-between items-center text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(40 42 46)' : '', borderColor: mode === 'dark' ? 'rgb(55 65 81)' : '' }}>
-                    <span className="text-gray-500" style={{ color: mode === 'dark' ? '#9ca3af' : '' }}>
+                  <div className="bg-gray-50 px-4 sm:px-6 py-3 border-t border-gray-100 flex justify-between items-center text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(40 42 46)' : '', borderColor: mode === 'dark' ? 'rgb(55 65 81)' : '' }}>
+                    <span className="text-gray-500 text-xs sm:text-sm" style={{ color: mode === 'dark' ? '#9ca3af' : '' }}>
                       Total ({orderData.cartItem?.length || 0} item{(orderData.cartItem?.length || 0) > 1 ? 's' : ''})
                     </span>
-                    <span className="font-extrabold text-lg text-pink-600">
+                    <span className="font-extrabold text-base sm:text-lg text-pink-600">
                       ₹{orderTotal}
                     </span>
                   </div>

@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, firedb } from '../../firebase/FirebaseConfig';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import Loader from '../../components/loader/Loader';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
@@ -26,6 +27,18 @@ function Login() {
         setLoading(true);
         try {
             const result = await signInWithEmailAndPassword(auth, email, password);
+            try {
+                const q = query(collection(firedb, "users"), where("uid", "==", result.user.uid));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (data?.name) {
+                        result.user.displayName = data.name;
+                    }
+                });
+            } catch (err) {
+                console.log("Error fetching user name:", err);
+            }
             localStorage.setItem('user', JSON.stringify(result));
             if (loadUserCartAndWishlist) {
                 await loadUserCartAndWishlist();
@@ -59,9 +72,9 @@ function Login() {
     }
 
     return (
-        <div className='flex justify-center items-center min-h-screen px-4 bg-gray-900'>
+        <div className='flex justify-center items-center min-h-screen px-4 py-8 bg-gray-900'>
             {loading && <Loader />}
-            <div className='bg-gray-800 px-8 py-10 rounded-3xl shadow-2xl border border-gray-700 w-full max-w-md'>
+            <div className='bg-gray-800 px-6 sm:px-8 py-8 sm:py-10 rounded-3xl shadow-2xl border border-gray-700 w-full max-w-md'>
                 <div className="text-center mb-6">
                     <Link to={'/'} className="inline-block">
                         <h2 className="text-2xl font-extrabold text-pink-500 tracking-tight">ShopKartz</h2>
