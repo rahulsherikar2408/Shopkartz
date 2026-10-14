@@ -6,52 +6,64 @@ export default function Footer() {
   const context = useContext(myContext)
   const { mode } = context
   return (
-    <footer className="text-gray-600 body-font bg-gray-300" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }}>
-      <div className="container px-5 py-24 mx-auto" >
+    <footer className="text-gray-600 body-font bg-gray-200" style={{ backgroundColor: mode === 'dark' ? 'rgb(32 33 34)' : '', color: mode === 'dark' ? 'white' : '', }}>
+      <div className="container px-5 py-12 mx-auto" >
         <div className="flex flex-wrap md:text-left text-center order-first">
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3" style={{ color: mode === 'dark' ? 'white' : '' }}>CATEGORIES</h2>
-            <nav className="list-none mb-10">
+            <h2 className="title-font font-bold text-gray-900 tracking-wider text-sm mb-4 uppercase" style={{ color: mode === 'dark' ? 'white' : '' }}>Quick Links</h2>
+            <nav className="list-none mb-10 space-y-2">
               <li>
-                <Link className="text-gray-600 hover:text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>Home</Link>
+                <Link to={'/'} className="text-gray-600 hover:text-pink-600 transition-colors" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>Home</Link>
               </li>
               <li>
-                <Link className="text-gray-600 hover:text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>Order</Link>
+                <Link to={'/allproducts'} className="text-gray-600 hover:text-pink-600 transition-colors" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>All Products</Link>
               </li>
               <li>
-                <Link className="text-gray-600 hover:text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>Local For Vocal</Link>
+                <Link to={'/order'} className="text-gray-600 hover:text-pink-600 transition-colors" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>Orders</Link>
               </li>
               <li>
-                <Link className="text-gray-600 hover:text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>Cart</Link>
+                <Link to={'/cart'} className="text-gray-600 hover:text-pink-600 transition-colors" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>Cart</Link>
+              </li>
+              <li>
+                <Link to={'/wishlist'} className="text-gray-600 hover:text-pink-600 transition-colors" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>Wishlist</Link>
               </li>
             </nav>
           </div>
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3 uppercase" style={{ color: mode === 'dark' ? 'white' : '' }}>Customer Service</h2>
-            <nav className="list-none mb-10">
+            <h2 className="title-font font-bold text-gray-900 tracking-wider text-sm mb-4 uppercase" style={{ color: mode === 'dark' ? 'white' : '' }}>Customer Service</h2>
+            <nav className="list-none mb-10 space-y-2">
               <li>
-                <Link className="text-gray-600 hover:text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>Return Policy</Link>
+                <Link to={'/'} className="text-gray-600 hover:text-pink-600 transition-colors" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>Return Policy</Link>
               </li>
               <li>
-                <Link className="text-gray-600 hover:text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>About</Link>
+                <Link to={'/'} className="text-gray-600 hover:text-pink-600 transition-colors" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>About Us</Link>
               </li>
               <li>
-                <Link className="text-gray-600 hover:text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>Contact Us</Link>
+                <Link to={'/'} className="text-gray-600 hover:text-pink-600 transition-colors" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>Contact Support</Link>
+              </li>
+              <li>
+                <Link to={'/'} className="text-gray-600 hover:text-pink-600 transition-colors" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>FAQ & Help</Link>
               </li>
             </nav>
           </div>
 
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3" style={{ color: mode === 'dark' ? 'white' : '' }}>Services</h2>
-            <nav className="list-none mb-10">
+            <h2 className="title-font font-bold text-gray-900 tracking-wider text-sm mb-4 uppercase" style={{ color: mode === 'dark' ? 'white' : '' }}>Security & Trust</h2>
+            <nav className="list-none mb-10 space-y-2">
               <li>
-                <Link to={'/privacypolicy'} className="text-gray-600 hover:text-gray-800" style={{ color: mode === 'dark' ? 'white' : '' }}>Privacy</Link>
+                <span className="text-gray-600 block text-sm" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>🔒 100% Secure Checkout</span>
               </li>
-
+              <li>
+                <span className="text-gray-600 block text-sm" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>🚚 Free Delivery over ₹300</span>
+              </li>
+              <li>
+                <span className="text-gray-600 block text-sm" style={{ color: mode === 'dark' ? '#d1d5db' : '' }}>✨ Easy 7-Day Returns</span>
+              </li>
             </nav>
           </div>
-          <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <img src="https://ecommerce-sk.vercel.app/pay.png" alt="" />
+          <div className="lg:w-1/4 md:w-1/2 w-full px-4 flex flex-col justify-center items-center md:items-start">
+            <p className="text-xs font-semibold mb-2 text-gray-500 uppercase tracking-wider" style={{ color: mode === 'dark' ? '#9ca3af' : '' }}>We Accept</p>
+            <img src="https://ecommerce-sk.vercel.app/pay.png" alt="Payment methods" className="max-w-[200px]" />
           </div>
         </div>
 

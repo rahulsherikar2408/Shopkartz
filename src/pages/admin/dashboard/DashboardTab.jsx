@@ -4,12 +4,13 @@ import MyContext from '../../../context/data/MyContext';
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md';
 import { FaUser, FaCartPlus } from 'react-icons/fa';
 import { AiFillShopping, AiFillPlusCircle, AiFillDelete } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../../../components/layout/Layout';
 
 function DashboardTab() {
     const context = useContext(MyContext)
     const { mode, product, edithandle, deleteProduct, order, user } = context
+    const navigate = useNavigate()
     let [isOpen, setIsOpen] = useState(false)
 
     // console.log(product)
@@ -23,7 +24,7 @@ function DashboardTab() {
     }
 
     const add = () => {
-        window.location.href = '/addproduct'
+        navigate('/addproduct')
     }
 
     return (
@@ -56,17 +57,20 @@ function DashboardTab() {
                         <TabPanel>
                             <div className='  px-4 md:px-0 mb-16'>
                                 <h1 className=' text-center mb-5 text-3xl font-semibold underline' style={{ color: mode === 'dark' ? 'white' : '' }}>Product Details</h1>
-                                <div className=" flex justify-end">
+                                <div className="flex justify-end">
                                     <button
                                         type="button"
                                         onClick={add}
-                                        className="focus:outline-none text-white bg-pink-600 shadow-[inset_0_0_10px_rgba(0,0,0,0.6)] border hover:bg-pink-700 outline-0 font-medium rounded-lg text-sm px-5 py-2.5 mb-2" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} > <div className="flex gap-2 items-center">
-                                            Add Product <FaCartPlus size={20} />
-                                        </div></button>
+                                        className="text-white bg-pink-600 hover:bg-pink-700 font-bold rounded-xl text-sm px-5 py-2.5 mb-4 shadow-md hover:shadow-lg transition-all duration-200"
+                                    >
+                                        <div className="flex gap-2 items-center">
+                                            Add Product <FaCartPlus size={18} />
+                                        </div>
+                                    </button>
                                 </div>
-                                <div className="relative overflow-x-auto ">
-                                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400  ">
-                                        <thead className="text-xs border border-gray-600 text-black uppercase bg-gray-200 shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
+                                <div className="relative overflow-x-auto rounded-2xl border border-gray-200 shadow-sm">
+                                    <table className="w-full text-sm text-left text-gray-500">
+                                        <thead className="text-xs uppercase bg-gray-100" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
                                             <tr>
                                                 <th scope="col" className="px-6 py-3">
                                                     S.No
@@ -95,7 +99,7 @@ function DashboardTab() {
                                         {product.map((item, index) => {
                                             const { title, price, imageUrl, category, description, date } = item;
                                             return (
-                                                <tbody className=''>
+                                                <tbody key={item.id || index} className=''>
                                                     <tr className="bg-gray-50 border-b  dark:border-gray-700" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
                                                         <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
                                                             {index + 1}
@@ -191,12 +195,11 @@ function DashboardTab() {
                                     </thead>
                                     {order.map((allorder, index) => {
                                         return (
-                                            <>
-                                                {allorder.cartItem.map((item, index) => {
+                                            <React.Fragment key={allorder.id || index}>
+                                                {allorder.cartItem.map((item, subIndex) => {
                                                     const { title, description, category, imageUrl, price } = item;
-                                                    console.log(item)
                                                     return (
-                                                        <tbody>
+                                                        <tbody key={`${allorder.id || index}-${subIndex}`}>
                                                             <tr className="bg-gray-50 border-b  dark:border-gray-700" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
                                                                 <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
                                                                     {index + 1}.
@@ -240,7 +243,8 @@ function DashboardTab() {
 
                                                         </tbody>
                                                     )
-                                                })}</>
+                                                })}
+                                            </React.Fragment>
                                         )
                                     })}
                                 </table>
@@ -273,7 +277,7 @@ function DashboardTab() {
                                     {user.map((item, index) => {
                                         const { name, email, uid } = item;
                                         return (
-                                            <tbody>
+                                            <tbody key={uid || index}>
 
                                                 <tr className="bg-gray-50 border-b  dark:border-gray-700" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
                                                     <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>

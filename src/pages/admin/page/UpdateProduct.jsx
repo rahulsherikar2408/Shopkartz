@@ -7,18 +7,19 @@ function UpdateProduct() {
     const { products, setProducts, updateProduct } = context;
 
     return (
-        <div>
-            <div className=' flex justify-center items-center h-screen'>
-                <div className=' bg-gray-800 px-10 py-10 rounded-xl '>
-                    <div className="">
-                        <h1 className='text-center text-white text-xl mb-4 font-bold'>Update Product</h1>
-                    </div>
+        <div className='flex justify-center items-center min-h-screen px-4 py-8 bg-gray-900'>
+            <div className='bg-gray-800 px-8 py-8 rounded-3xl shadow-2xl border border-gray-700 w-full max-w-md'>
+                <div className="text-center mb-6">
+                    <h1 className='text-white text-2xl font-bold'>Update Product</h1>
+                    <p className='text-xs text-gray-400 mt-1'>Modify details for this catalog item</p>
+                </div>
+                <div className="space-y-3">
                     <div>
                         <input type="text"
                             value={products.title}
                             onChange={(e) => setProducts({ ...products, title: e.target.value })}
                             name='title'
-                            className=' bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none'
+                            className='bg-gray-700 border border-gray-600 px-4 py-2.5 w-full rounded-xl text-white placeholder:text-gray-400 outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm'
                             placeholder='Product title'
                         />
                     </div>
@@ -27,8 +28,8 @@ function UpdateProduct() {
                             value={products.price}
                             onChange={(e) => setProducts({ ...products, price: e.target.value })}
                             name='price'
-                            className=' bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none'
-                            placeholder='Product price'
+                            className='bg-gray-700 border border-gray-600 px-4 py-2.5 w-full rounded-xl text-white placeholder:text-gray-400 outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm'
+                            placeholder='Product price (₹)'
                         />
                     </div>
                     <div>
@@ -36,7 +37,7 @@ function UpdateProduct() {
                             value={products.imageUrl}
                             onChange={(e) => setProducts({ ...products, imageUrl: e.target.value })}
                             name='imageurl'
-                            className=' bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none'
+                            className='bg-gray-700 border border-gray-600 px-4 py-2.5 w-full rounded-xl text-white placeholder:text-gray-400 outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm'
                             placeholder='Product imageUrl'
                         />
                     </div>
@@ -45,27 +46,25 @@ function UpdateProduct() {
                             value={products.category}
                             onChange={(e) => setProducts({ ...products, category: e.target.value })}
                             name='category'
-                            className=' bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none'
+                            className='bg-gray-700 border border-gray-600 px-4 py-2.5 w-full rounded-xl text-white placeholder:text-gray-400 outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm'
                             placeholder='Product category'
                         />
                     </div>
                     <div>
-                        <textarea cols="30" rows="10" name='title'
+                        <textarea cols="30" rows="3" name='description'
                             value={products.description}
                             onChange={(e) => setProducts({ ...products, description: e.target.value })}
-                            className=' bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none'
+                            className='bg-gray-700 border border-gray-600 px-4 py-2.5 w-full rounded-xl text-white placeholder:text-gray-400 outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm resize-none'
                             placeholder='Product Description'>
-
                         </textarea>
                     </div>
-                    <div className=' flex justify-center mb-3'>
+                    <div className='pt-2'>
                         <button
                             onClick={() => updateProduct(products)}
-                            className=' bg-yellow-500 w-full text-black font-bold  px-2 py-2 rounded-lg'>
+                            className='bg-pink-600 hover:bg-pink-700 w-full text-white font-bold py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 text-sm'>
                             Update Product
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>
