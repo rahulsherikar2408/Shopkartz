@@ -3,10 +3,10 @@ import MyContext from '../../context/data/MyContext';
 import Layout from '../../components/layout/Layout';
 import Modal from '../../components/modal/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteFromCart } from '../../redux/cartSlice';
+import { deleteFromCart, clearCart } from '../../redux/cartSlice';
 import { toast } from 'react-toastify';
 import { firedb } from '../../firebase/FirebaseConfig';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 
 
 function Cart() {
@@ -37,7 +37,7 @@ function Cart() {
     setTotalAmount(temp);
   }, [cartItem])
 
-  const shipping = parseInt(100);
+  const shipping = (totalAmount > 300 || totalAmount === 0) ? 0 : 100;
 
   const grandTotal = totalAmount + shipping;
 
@@ -48,6 +48,12 @@ function Cart() {
 
 
   const buyNow = async () => {
+    const userData = localStorage.getItem("user");
+    if (!userData) {
+      return toast.error("Please login to place an order");
+    }
+    const parsedUser = JSON.parse(userData);
+
     // validation 
     if (name === "" || address == "" || pincode == "" || phoneNumber == "") {
       return toast.error("All fields are required", {
@@ -101,16 +107,24 @@ function Cart() {
               year: "numeric",
             }
           ),
-          email: JSON.parse(localStorage.getItem("user")).user.email,
-          userid: JSON.parse(localStorage.getItem("user")).user.uid,
+          email: parsedUser?.user?.email,
+          userid: parsedUser?.user?.uid,
           paymentId
         }
 
         try {
-
           const orderRef = collection(firedb, "orders");
           await addDoc(orderRef, orderInfo);
-
+          dispatch(clearCart());
+          localStorage.removeItem('cart');
+          if (parsedUser?.user?.uid) {
+            await setDoc(doc(firedb, 'carts', parsedUser.user.uid), {
+              uid: parsedUser.user.uid,
+              email: parsedUser.user.email || '',
+              cartItems: [],
+              updatedAt: new Date().toISOString()
+            });
+          }
         } catch (error) {
           console.log(error)
         }
@@ -166,8 +180,15 @@ function Cart() {
             </div>
             <div className="flex justify-between">
               <p className="text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>Shipping</p>
-              <p className="text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>₹{shipping}</p>
+              <p className={shipping === 0 && totalAmount > 0 ? "text-green-600 font-semibold" : "text-gray-700"} style={{ color: shipping === 0 && totalAmount > 0 ? '' : (mode === 'dark' ? 'white' : '') }}>
+                {shipping === 0 && totalAmount > 0 ? "FREE" : `₹${shipping}`}
+              </p>
             </div>
+            {totalAmount > 0 && totalAmount <= 300 && (
+              <p className="text-xs text-pink-600 mt-1">
+                Add ₹{301 - totalAmount} more to qualify for Free Delivery!
+              </p>
+            )}
             <hr className="my-4" />
             <div className="flex justify-between mb-3">
               <p className="text-lg font-bold" style={{ color: mode === 'dark' ? 'white' : '' }}>Total</p>

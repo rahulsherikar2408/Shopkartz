@@ -24,6 +24,7 @@ function Navbar() {
   }
 
   const cardItem = useSelector((state) => state.cart);
+  const wishlistItems = useSelector((state) => state.wishlist);
 
   return (
     <div className="bg-white sticky top-0 z-50  " >
@@ -68,6 +69,13 @@ function Navbar() {
                   <Link to={'/allproducts'} className="text-sm font-medium text-gray-900 " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     All Products
                   </Link>
+
+                  <div className="flow-root">
+                    <Link to={'/wishlist'} className="text-sm font-medium text-gray-900 flex items-center justify-between" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                      <span>Wishlist</span>
+                      <span className="bg-pink-600 text-white text-xs px-2 py-0.5 rounded-full">{wishlistItems.length}</span>
+                    </Link>
+                  </div>
 
                   {!user ?
                     <div className="flow-root">
@@ -138,8 +146,8 @@ function Navbar() {
                 onClick={() => setOpen(true)} style={{ backgroundColor: mode === 'dark' ? 'rgb(80 82 87)' : '', color: mode === 'dark' ? 'white' : '', }}
               >
                 <span className="sr-only">Open menu</span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
 
               </button>
@@ -158,6 +166,10 @@ function Navbar() {
 
                   <Link to={'/allproducts'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     All Products
+                  </Link>
+
+                  <Link to={'/wishlist'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    Wishlist
                   </Link>
 
                   {!user ?
@@ -210,6 +222,17 @@ function Navbar() {
                         (<BsFillCloudSunFill size={30} />
                         ) : ''}
                   </button>
+                </div>
+
+                {/* Wishlist Icon */}
+                <div className="ml-4 flow-root lg:ml-6">
+                  <Link to={'/wishlist'} className="group -m-2 flex items-center p-2" style={{ color: mode === 'dark' ? 'white' : '', }} title="Wishlist">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                    </svg>
+                    <span className="ml-1 text-sm font-medium text-gray-700" style={{ color: mode === 'dark' ? 'white' : '', }}>{wishlistItems.length}</span>
+                    <span className="sr-only">items in wishlist</span>
+                  </Link>
                 </div>
 
                 {/* Cart */}

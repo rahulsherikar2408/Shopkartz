@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import MyContext from './MyContext';
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, QuerySnapshot, setDoc, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, Timestamp } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { firedb } from '../../firebase/FirebaseConfig';
-import { use } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCart } from '../../redux/cartSlice';
+import { setWishlist } from '../../redux/wishlistSlice';
 
 function MyState(props) {
 
@@ -191,14 +193,124 @@ function MyState(props) {
     const [filterType, setFilterType] = useState('')
     const [filterPrice, setFilterPrice] = useState('')
 
+    const dispatch = useDispatch();
+    const cartItems = useSelector((state) => state.cart);
+    const wishlistItems = useSelector((state) => state.wishlist);
+
+    const isCartLoaded = useRef(false);
+    const isWishlistLoaded = useRef(false);
+
+    const loadUserCartAndWishlist = async () => {
+        try {
+            const userData = localStorage.getItem('user');
+            if (!userData) {
+                isCartLoaded.current = true;
+                isWishlistLoaded.current = true;
+                return;
+            }
+            const parsedUser = JSON.parse(userData);
+            const uid = parsedUser?.user?.uid;
+            if (!uid) {
+                isCartLoaded.current = true;
+                isWishlistLoaded.current = true;
+                return;
+            }
+
+            // Load Cart from Firestore
+            const cartDocSnap = await getDoc(doc(firedb, 'carts', uid));
+            if (cartDocSnap.exists()) {
+                const data = cartDocSnap.data();
+                if (data && Array.isArray(data.cartItems)) {
+                    dispatch(setCart(data.cartItems));
+                    localStorage.setItem('cart', JSON.stringify(data.cartItems));
+                }
+            } else {
+                const localCart = JSON.parse(localStorage.getItem('cart')) || [];
+                if (localCart.length > 0) {
+                    await setDoc(doc(firedb, 'carts', uid), {
+                        uid,
+                        email: parsedUser?.user?.email || '',
+                        cartItems: localCart,
+                        updatedAt: new Date().toISOString()
+                    });
+                }
+            }
+            isCartLoaded.current = true;
+
+            // Load Wishlist from Firestore
+            const wishlistDocSnap = await getDoc(doc(firedb, 'wishlists', uid));
+            if (wishlistDocSnap.exists()) {
+                const data = wishlistDocSnap.data();
+                if (data && Array.isArray(data.wishlistItems)) {
+                    dispatch(setWishlist(data.wishlistItems));
+                    localStorage.setItem('wishlist', JSON.stringify(data.wishlistItems));
+                }
+            } else {
+                const localWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+                if (localWishlist.length > 0) {
+                    await setDoc(doc(firedb, 'wishlists', uid), {
+                        uid,
+                        email: parsedUser?.user?.email || '',
+                        wishlistItems: localWishlist,
+                        updatedAt: new Date().toISOString()
+                    });
+                }
+            }
+            isWishlistLoaded.current = true;
+        } catch (error) {
+            console.log('Error loading cart/wishlist from firestore:', error);
+            isCartLoaded.current = true;
+            isWishlistLoaded.current = true;
+        }
+    };
+
     useEffect(() => {
         getProductData();
         getOrderData();
         getUserData();
+        loadUserCartAndWishlist();
     }, []);
 
+    // Save Cart to Firestore whenever cartItems change
+    useEffect(() => {
+        if (!isCartLoaded.current) return;
+        const userData = localStorage.getItem('user');
+        if (userData) {
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+            const parsedUser = JSON.parse(userData);
+            const uid = parsedUser?.user?.uid;
+            if (uid) {
+                setDoc(doc(firedb, 'carts', uid), {
+                    uid,
+                    email: parsedUser?.user?.email || '',
+                    cartItems,
+                    updatedAt: new Date().toISOString()
+                }).catch(err => console.log('Error saving cart to firestore:', err));
+            }
+        }
+    }, [cartItems]);
+
+    // Save Wishlist to Firestore whenever wishlistItems change
+    useEffect(() => {
+        if (!isWishlistLoaded.current) return;
+        const userData = localStorage.getItem('user');
+        if (userData) {
+            localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+            const parsedUser = JSON.parse(userData);
+            const uid = parsedUser?.user?.uid;
+            if (uid) {
+                setDoc(doc(firedb, 'wishlists', uid), {
+                    uid,
+                    email: parsedUser?.user?.email || '',
+                    wishlistItems,
+                    updatedAt: new Date().toISOString()
+                }).catch(err => console.log('Error saving wishlist to firestore:', err));
+            }
+        }
+    }, [wishlistItems]);
+
     return (
-        <MyContext.Provider value={{ mode, toggleMode, loading, setLoading, products, setProducts, addProduct, product, edithandle, updateProduct, deleteProduct, order, user, searchkey, setSearchkey, filterType, setFilterType, filterPrice, setFilterPrice }}>
+        <MyContext.Provider value={{ mode, toggleMode, loading, setLoading, products, setProducts, addProduct, product, edithandle, updateProduct, deleteProduct, order, user, searchkey, setSearchkey, filterType, setFilterType, filterPrice, setFilterPrice, loadUserCartAndWishlist }}>
             {props.children}
         </MyContext.Provider>
     )

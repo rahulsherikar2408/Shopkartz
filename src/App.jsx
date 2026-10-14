@@ -14,6 +14,7 @@ import UpdateProduct from './pages/admin/page/UpdateProduct';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AllProducts from './pages/allproducts/AllProducts';
+import Wishlist from './pages/wishlist/Wishlist';
 
 function App() {
   return (
@@ -22,12 +23,21 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/allproducts" element={<AllProducts />} />
+          <Route path="/wishlist" element={
+            <ProtectedRoute>
+              <Wishlist />
+            </ProtectedRoute>
+          } />
           <Route path="/order" element={
             <ProtectedRoute>
               <Order />
             </ProtectedRoute>
           } />
-          <Route path="cart" element={<Cart />} />
+          <Route path="/cart" element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          } />
           <Route path="/dashboard" element={
             <ProtectedRouteForAdmin>
               <Dashboard />
@@ -72,7 +82,7 @@ export const ProtectedRoute = ({ children }) => {
 
 const ProtectedRouteForAdmin = ({ children }) => {
   const admin = JSON.parse(localStorage.getItem('user'))
-  if (admin.user.email === 'sherikarrahul59@gmail.com') {
+  if (admin?.user?.email === 'sherikarrahul59@gmail.com') {
     return children
   }
   else {

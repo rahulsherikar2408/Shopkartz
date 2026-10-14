@@ -13,7 +13,7 @@ function Login() {
     const [password, setPassword] = useState('');
 
     const context = useContext(MyContext);
-    const { loading, setLoading } = context;
+    const { loading, setLoading, loadUserCartAndWishlist } = context;
 
     const navigate = useNavigate();
 
@@ -25,6 +25,9 @@ function Login() {
         try {
             const result = await signInWithEmailAndPassword(auth, email, password);
             localStorage.setItem('user', JSON.stringify(result));
+            if (loadUserCartAndWishlist) {
+                await loadUserCartAndWishlist();
+            }
             toast.success("Login Successful", {
                 position: "top-right",
                 autoClose: 2000,

@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Layout from '../../components/layout/Layout'
 import MyContext from '../../context/data/MyContext';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { doc, getDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { addToCart } from '../../redux/cartSlice';
+import { addToWishlist, deleteFromWishlist } from '../../redux/wishlistSlice';
 import { firedb } from '../../firebase/FirebaseConfig';
 
 function ProductInfo() {
@@ -14,6 +15,7 @@ function ProductInfo() {
 
     const [products, setProducts] = useState('')
     const params = useParams()
+    const navigate = useNavigate();
     // console.log(products.title)
 
     const getProductData = async () => {
@@ -40,16 +42,43 @@ function ProductInfo() {
 
     const dispatch = useDispatch()
     const cartItems = useSelector((state) => state.cart)
-    // console.log(cartItems)
+    const wishlistItems = useSelector((state) => state.wishlist)
+    const isWishlisted = products ? wishlistItems.some(w => (w.id || w.title) === (params.id || products.title)) : false;
 
     // add to cart
     const addCart = (products) => {
-        dispatch(addToCart(products))
-        toast.success('add to cart');
+        const user = localStorage.getItem('user');
+        if (!user) {
+            toast.error('Please login to add to cart');
+            navigate('/login');
+            return;
+        }
+        dispatch(addToCart(products));
+        toast.success('Product added to cart');
+    }
+
+    const toggleWishlist = () => {
+        const user = localStorage.getItem('user');
+        if (!user) {
+            toast.error('Please login to use wishlist');
+            navigate('/login');
+            return;
+        }
+        const itemToToggle = { ...products, id: params.id };
+        if (isWishlisted) {
+            dispatch(deleteFromWishlist(itemToToggle));
+            toast.success('Removed from wishlist');
+        } else {
+            dispatch(addToWishlist(itemToToggle));
+            toast.success('Added to wishlist');
+        }
     }
 
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cartItems));
+        const user = localStorage.getItem('user');
+        if (user) {
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+        }
     }, [cartItems])
 
 
@@ -182,9 +211,17 @@ function ProductInfo() {
                                     <button onClick={() => addCart(products)} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                                         Add To Cart
                                     </button>
-                                    <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                                    <button
+                                        type="button"
+                                        onClick={toggleWishlist}
+                                        className={`rounded-full w-10 h-10 p-0 border-0 inline-flex items-center justify-center ml-4 transition-colors ${
+                                            isWishlisted ? 'bg-red-100 text-red-500' : 'bg-gray-200 text-gray-500 hover:text-red-500'
+                                        }`}
+                                        title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                                    >
                                         <svg
-                                            fill="currentColor"
+                                            fill={isWishlisted ? "currentColor" : "none"}
+                                            stroke="currentColor"
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
                                             strokeWidth={2}
